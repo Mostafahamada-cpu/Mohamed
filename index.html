@@ -556,9 +556,6 @@
 
         /* Cloud Sync Button */
         .sync-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -567,7 +564,6 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -613,13 +609,29 @@
             opacity: 1;
         }
 
+        /* Fixed Actions Container */
+        .fixed-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+            z-index: 1000;
+        }
+
         @media screen and (max-width: 600px) {
             .sync-btn {
-                bottom: 20px;
-                right: 20px;
                 width: 50px;
                 height: 50px;
                 font-size: 1.2em;
+            }
+
+            .fixed-actions {
+                bottom: 20px;
+                right: 20px;
+                gap: 10px;
             }
         }
 
@@ -1527,7 +1539,13 @@
     </div>
 
     <div id="main-content">
-        <button class="edit-toggle-btn" onclick="toggleEditMode()">✏️ Edit Page</button>
+        <div class="fixed-actions">
+            <button id="syncBtn" class="sync-btn" onclick="syncToCloud()" title="Sync data to cloud">
+                ☁️
+                <span class="sync-tooltip">Sync to Cloud</span>
+            </button>
+            <button class="edit-toggle-btn" onclick="toggleEditMode()">✏️ Edit Page</button>
+        </div>
         <div class="container">
             <h1>Happy Valentine's Day <span class="heart-icon">💖</span></h1>
             <p class="subtitle">To the love of my life</p>
@@ -1746,11 +1764,7 @@
         </div>
     </div>
 
-    <!-- Cloud Sync Button -->
-    <button id="syncBtn" class="sync-btn" onclick="syncToCloud()" title="Sync data to cloud">
-        ☁️
-        <span class="sync-tooltip">Sync to Cloud</span>
-    </button>
+
 
     <!-- Quiz Modal -->
     <div class="quiz-modal" id="quizModal">
