@@ -2349,9 +2349,87 @@
             }
         }
     </script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+  // 2. الـ Config الجديد بتاع "محمد"
+  const firebaseConfig = {
+    apiKey: "AIzaSyCSb2m6QVdgK7pcabn0r5PSsHWXYQ33u1w",
+    authDomain: "mohamed-30902.firebaseapp.com",
+    projectId: "mohamed-30902",
+    storageBucket: "mohamed-30902.firebasestorage.app",
+    messagingSenderId: "99060397568",
+    appId: "1:99060397568:web:cfff7bfee8a04b8dc78ae5"
+  };
+
+  // 3. تهيئة Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  // تحديد مكان حفظ الداتا
+  const docRef = db.collection("backups").doc("main_sync");
+
+  // 4. دالة الرفع (Upload) - بدون رسايل Alert
+  window.syncToCloud = async function() {
+    const btn = document.getElementById('saveToCloudBtn');
+    if (!btn) return;
+
+    try {
+        btn.innerHTML = "⏳ Syncing...";
+        btn.disabled = true;
+
+        const textData = localStorage.getItem('valentines_content_text') || '{}';
+        const imagesData = localStorage.getItem('valentine_memories') || '[]';
+
+        await docRef.set({
+            textContent: JSON.parse(textData),
+            images: JSON.parse(imagesData),
+            lastSynced: new Date().toISOString()
+        });
+
+        // تغيير شكل الزرار فقط كدليل على النجاح
+        btn.innerHTML = "✅ Done";
+        btn.style.backgroundColor = "#28a745"; 
+
+        setTimeout(() => {
+            btn.innerHTML = "☁️ Sync to Cloud";
+            btn.disabled = false;
+            btn.style.backgroundColor = "";
+        }, 2000);
+
+    } catch (e) {
+        console.error("Sync Error:", e);
+        btn.innerHTML = "❌ Error";
+        btn.disabled = false;
+        // لو ظهرت مشكلة في الـ Rules هتطلع هنا
+        alert("Check Firestore Rules: " + e.message);
+    }
+  };
+
+  // 5. دالة الاستقبال اللحظي (Listener)
+  docRef.onSnapshot((doc) => {
+    if (doc.exists) {
+        const data = doc.data();
+        const localTime = localStorage.getItem('cloud_sync_time');
+
+        if (data.lastSynced !== localTime) {
+            localStorage.setItem('valentines_content_text', JSON.stringify(data.textContent));
+            localStorage.setItem('valentine_memories', JSON.stringify(data.images));
+            localStorage.setItem('cloud_sync_time', data.lastSynced);
+
+            // تحديث الواجهة (تأكد إن الأسامي دي هي اللي عندك في ملف الـ JS)
+            if (typeof loadContent === 'function') loadContent();
+            if (typeof loadSavedMemories === 'function') {
+                const swiperWrapper = document.querySelector('.swiper-wrapper');
+                if(swiperWrapper) swiperWrapper.innerHTML = '';
+                loadSavedMemories();
+            }
+        }
+    }
+  });
+</script>
 </body>
 
 
 
 </html>
-
