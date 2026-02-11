@@ -1542,7 +1542,7 @@
 
         <!-- Anniversary Countdown Section -->
         <div class="countdown-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            <p class="countdown-title">💍 Countdown to Our Anniversary (March 9) 💍</p>
+            <p class="countdown-title">💍 Countdown to Our Anniversary (September 3) 💍</p>
             <div class="countdown-timer" id="anniversaryCountdown">
                 <div class="countdown-item">
                     <span class="countdown-number" id="annDays">00</span>
@@ -1565,7 +1565,7 @@
 
         <!-- Relationship Duration Counter -->
         <div class="countdown-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-            <p class="countdown-title">❤️ Together Since March 9, 2025 ❤️</p>
+            <p class="countdown-title">❤️ Together Since September 3, 2025 ❤️</p>
             <div class="countdown-timer" id="relationshipDuration">
                 <div class="countdown-item">
                     <span class="countdown-number" id="relYears">0</span>
@@ -1702,7 +1702,7 @@
                 <div class="quiz-question" data-correct="1">
                     <p>2. When is our anniversary?</p>
                     <div class="quiz-options">
-                        <div class="quiz-option" data-value="1">March 9</div>
+                        <div class="quiz-option" data-value="1">September 3</div>
                         <div class="quiz-option" data-value="2">August 3</div>
                         <div class="quiz-option" data-value="3">September 9</div>
                     </div>
@@ -1785,11 +1785,11 @@
         function updateAnniversaryCountdown() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            let anniversary = new Date(currentYear, 2, 9); // March 9 (month is 0-indexed)
+            let anniversary = new Date(currentYear, 8, 3); // September 3 (month is 0-indexed)
 
             // If anniversary has passed this year, count to next year
             if (now > anniversary) {
-                anniversary = new Date(currentYear + 1, 2, 9);
+                anniversary = new Date(currentYear + 1, 8, 3);
             }
 
             const diff = anniversary - now;
@@ -1817,7 +1817,7 @@
 
         // Relationship Duration Counter (since July 24, 2024)
         function updateRelationshipDuration() {
-            const startDate = new Date(2025, 2, 9); // March 9, 2025
+            const startDate = new Date(2025, 8, 3); // September 3, 2025
             const now = new Date();
 
             // Calculate total days
@@ -2350,7 +2350,6 @@
         }
     </script>
 </body>
-
 
 
 
