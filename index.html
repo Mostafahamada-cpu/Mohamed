@@ -554,6 +554,75 @@
             }
         }
 
+        /* Cloud Sync Button */
+        .sync-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e91e63;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+        }
+
+        .sync-btn:hover {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
+        }
+
+        .sync-btn.syncing {
+            animation: spin 2s linear infinite;
+            background: #b85a71;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .sync-tooltip {
+            position: absolute;
+            right: 70px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .sync-btn:hover .sync-tooltip {
+            opacity: 1;
+        }
+
+        @media screen and (max-width: 600px) {
+            .sync-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2em;
+            }
+        }
+
         .love-letter-content {
             display: none;
             margin-top: 25px;
@@ -672,7 +741,7 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 12px;
             border-left: 4px solid #ff6b9d;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .reasons-list li:hover {
@@ -1624,7 +1693,7 @@
                 <div class="bucket-item"><input type="text" class="editable-emoji bucket-icon" value="🌊"
                         oninput="saveContent()"><input type="text" class="editable-input bucket-input"
                         placeholder="Bucket list item..." oninput="saveContent()"> <button class="delete-btn"
-                        onclick="removeSelf(this)" title="Delete item">�️</button></div>
+                        onclick="removeSelf(this)" title="Delete item">🗑️</button></div>
             </div>
             <div style="text-align: center; margin-top: 15px;" class="add-btn-container">
                 <button class="unlock-btn" style="font-size: 0.9em; padding: 8px 20px;" onclick="addBucketItem()">➕ Add
@@ -1683,6 +1752,12 @@
         </div>
     </div>
 
+    <!-- Cloud Sync Button -->
+    <button id="syncBtn" class="sync-btn" onclick="syncToCloud()" title="Sync data to cloud">
+        ☁️
+        <span class="sync-tooltip">Sync to Cloud</span>
+    </button>
+
     <!-- Quiz Modal -->
     <div class="quiz-modal" id="quizModal">
         <div class="quiz-container">
@@ -1731,6 +1806,10 @@
 
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script>
         // Initialize Swiper
         const swiper = new Swiper('.swiper', {
@@ -2348,86 +2427,96 @@
                 btn.classList.remove('active');
             }
         }
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
-<script>
-  // 2. الـ Config الجديد بتاع "محمد"
-  const firebaseConfig = {
-    apiKey: "AIzaSyCSb2m6QVdgK7pcabn0r5PSsHWXYQ33u1w",
-    authDomain: "mohamed-30902.firebaseapp.com",
-    projectId: "mohamed-30902",
-    storageBucket: "mohamed-30902.firebasestorage.app",
-    messagingSenderId: "99060397568",
-    appId: "1:99060397568:web:cfff7bfee8a04b8dc78ae5"
-  };
+        /* Firebase & Cloud Sync Logic */
+        // Your web app's Firebase configuration
+        // NOTE: Replace this with your actual Firebase config from the Firebase Console
+        const firebaseConfig = {
+            apiKey: "AIzaSyCSb2m6QVdgK7pcabn0r5PSsHWXYQ33u1w",
+            authDomain: "mohamed-30902.firebaseapp.com",
+            projectId: "mohamed-30902",
+            storageBucket: "mohamed-30902.firebasestorage.app",
+            messagingSenderId: "99060397568",
+            appId: "1:99060397568:web:cfff7bfee8a04b8dc78ae5"
+        };
 
-  // 3. تهيئة Firebase
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  // تحديد مكان حفظ الداتا
-  const docRef = db.collection("backups").doc("main_sync");
-
-  // 4. دالة الرفع (Upload) - بدون رسايل Alert
-  window.syncToCloud = async function() {
-    const btn = document.getElementById('saveToCloudBtn');
-    if (!btn) return;
-
-    try {
-        btn.innerHTML = "⏳ Syncing...";
-        btn.disabled = true;
-
-        const textData = localStorage.getItem('valentines_content_text') || '{}';
-        const imagesData = localStorage.getItem('valentine_memories') || '[]';
-
-        await docRef.set({
-            textContent: JSON.parse(textData),
-            images: JSON.parse(imagesData),
-            lastSynced: new Date().toISOString()
-        });
-
-        // تغيير شكل الزرار فقط كدليل على النجاح
-        btn.innerHTML = "✅ Done";
-        btn.style.backgroundColor = "#28a745"; 
-
-        setTimeout(() => {
-            btn.innerHTML = "☁️ Sync to Cloud";
-            btn.disabled = false;
-            btn.style.backgroundColor = "";
-        }, 2000);
-
-    } catch (e) {
-        console.error("Sync Error:", e);
-        btn.innerHTML = "❌ Error";
-        btn.disabled = false;
-        // لو ظهرت مشكلة في الـ Rules هتطلع هنا
-        alert("Check Firestore Rules: " + e.message);
-    }
-  };
-
-  // 5. دالة الاستقبال اللحظي (Listener)
-  docRef.onSnapshot((doc) => {
-    if (doc.exists) {
-        const data = doc.data();
-        const localTime = localStorage.getItem('cloud_sync_time');
-
-        if (data.lastSynced !== localTime) {
-            localStorage.setItem('valentines_content_text', JSON.stringify(data.textContent));
-            localStorage.setItem('valentine_memories', JSON.stringify(data.images));
-            localStorage.setItem('cloud_sync_time', data.lastSynced);
-
-            // تحديث الواجهة (تأكد إن الأسامي دي هي اللي عندك في ملف الـ JS)
-            if (typeof loadContent === 'function') loadContent();
-            if (typeof loadSavedMemories === 'function') {
-                const swiperWrapper = document.querySelector('.swiper-wrapper');
-                if(swiperWrapper) swiperWrapper.innerHTML = '';
-                loadSavedMemories();
-            }
+        // Initialize Firebase
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } catch (e) {
+            console.warn("Firebase initialization skipped or failed. Please check config.");
         }
-    }
-  });
-</script>
+
+        // تحديد مكان حفظ الداتا
+        const docRef = db.collection("backups").doc("main_sync");
+
+        // 4. دالة الرفع (Upload) - بدون رسايل Alert
+        window.syncToCloud = async function () {
+            const btn = document.getElementById('saveToCloudBtn') || document.getElementById('syncBtn');
+            if (!btn) return;
+
+            try {
+                btn.classList.add('syncing');
+                btn.innerHTML = "⏳ Syncing...";
+                if (btn.id === 'saveToCloudBtn') btn.disabled = true;
+
+                const textData = localStorage.getItem('valentines_content_text') || '{}';
+                const imagesData = localStorage.getItem('valentine_memories') || '[]';
+
+                await docRef.set({
+                    textContent: JSON.parse(textData),
+                    images: JSON.parse(imagesData),
+                    lastSynced: new Date().toISOString()
+                });
+
+                // تغيير شكل الزرار فقط كدليل على النجاح
+                btn.innerHTML = "✅ Done";
+                if (btn.id === 'saveToCloudBtn') btn.style.backgroundColor = "#28a745";
+
+                setTimeout(() => {
+                    btn.classList.remove('syncing');
+                    btn.innerHTML = btn.id === 'syncBtn' ? "☁️" : "☁️ Sync to Cloud";
+                    if (btn.id === 'saveToCloudBtn') {
+                        btn.disabled = false;
+                        btn.style.backgroundColor = "";
+                    }
+                }, 2000);
+
+                alert("Data synced successfully! ☁️✨");
+
+            } catch (e) {
+                console.error("Sync Error:", e);
+                btn.classList.remove('syncing');
+                btn.innerHTML = "❌ Error";
+                if (btn.id === 'saveToCloudBtn') btn.disabled = false;
+                alert("Check Firestore Rules: " + e.message);
+            }
+        };
+
+        // 5. دالة الاستقبال اللحظي (Listener)
+        docRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                const localTime = localStorage.getItem('cloud_sync_time');
+
+                if (data.lastSynced !== localTime) {
+                    localStorage.setItem('valentines_content_text', JSON.stringify(data.textContent));
+                    localStorage.setItem('valentine_memories', JSON.stringify(data.images));
+                    localStorage.setItem('cloud_sync_time', data.lastSynced);
+
+                    // تحديث الواجهة (تأكد إن الأسامي دي هي اللي عندك في ملف الـ JS)
+                    if (typeof loadContent === 'function') loadContent();
+                    if (typeof loadSavedMemories === 'function') {
+                        const swiperWrapper = document.querySelector('.swiper-wrapper');
+                        if (swiperWrapper) swiperWrapper.innerHTML = '';
+                        loadSavedMemories();
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 
