@@ -733,11 +733,14 @@
 
         /* Content Sections */
         .content-section {
-            margin: 30px 0;
+            margin: 30px auto;
             padding: 25px;
             background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 100%);
             border-radius: 20px;
             border: 2px solid rgba(233, 30, 99, 0.2);
+            max-width: 700px;
+            width: 100%;
+            overflow: visible;
         }
 
         .section-title {
@@ -1224,6 +1227,70 @@
                 padding: 15px 25px;
                 font-size: 1em;
             }
+
+            /* Bucket List & Reasons sections mobile fix */
+            .content-section {
+                margin: 15px 4px;
+                padding: 15px 12px;
+                border-radius: 16px;
+                overflow: visible;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+                margin-bottom: 15px;
+            }
+
+            .bucket-list {
+                grid-template-columns: 1fr !important;
+                gap: 8px;
+            }
+
+            .bucket-item {
+                padding: 10px;
+                gap: 8px;
+                flex-wrap: nowrap;
+                overflow: hidden;
+            }
+
+            .bucket-item .editable-input {
+                min-width: 0;
+                font-size: 0.9em;
+            }
+
+            .bucket-item .editable-emoji {
+                width: 35px;
+                font-size: 1.2em;
+                flex-shrink: 0;
+            }
+
+            .reasons-list li {
+                padding: 10px;
+                gap: 8px;
+                flex-wrap: nowrap;
+                overflow: hidden;
+            }
+
+            .reasons-list li .editable-input {
+                min-width: 0;
+                font-size: 0.9em;
+            }
+
+            .reason-number {
+                width: 24px;
+                height: 24px;
+                font-size: 0.75em;
+                flex-shrink: 0;
+            }
+
+            .playlist-container {
+                gap: 8px;
+            }
+
+            .song-item {
+                padding: 10px;
+                gap: 10px;
+            }
         }
 
         /* Extra small phones (iPhone SE, older devices) */
@@ -1267,6 +1334,15 @@
 
             .footer .tagline {
                 font-size: 0.8em;
+            }
+
+            .content-section {
+                margin: 12px 3px;
+                padding: 12px 8px;
+            }
+
+            .section-title {
+                font-size: 1.2em;
             }
         }
 
