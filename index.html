@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Valentine's Memories</title>
     <!-- Google Fonts -->
     <link
@@ -554,111 +554,19 @@
             }
         }
 
-        /* Cloud Sync Button */
-        .sync-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #e91e63;
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            transition: all 0.3s ease;
-        }
-
-        .sync-btn:hover {
-            transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 6px 20px rgba(233, 30, 99, 0.6);
-        }
-
-        .sync-btn.syncing {
-            animation: spin 2s linear infinite;
-            background: #b85a71;
-        }
-
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .sync-tooltip {
-            position: absolute;
-            right: 70px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.8em;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .sync-btn:hover .sync-tooltip {
-            opacity: 1;
-        }
-
-        /* Fixed Actions Container */
-        .fixed-actions {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 15px;
-            z-index: 1000;
-        }
-
-        @media screen and (max-width: 600px) {
-            .sync-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2em;
-            }
-
-            .fixed-actions {
-                bottom: 20px;
-                right: 20px;
-                gap: 10px;
-            }
-        }
-
         .love-letter-content {
             display: none;
             margin-top: 25px;
             padding: 30px;
-            padding-bottom: 20px;
             background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 100%);
             border-radius: 20px;
             border: 2px solid #ffb6c1;
             text-align: left;
             animation: unfold 0.5s ease-out;
-            max-height: 80vh;
-            overflow-y: auto;
         }
 
         .love-letter-content.show {
             display: block;
-        }
-
-        @media (max-width: 600px) {
-            .love-letter-content {
-                width: 90% !important;
-                font-size: 16px !important;
-                line-height: 1.5;
-            }
         }
 
         @keyframes unfold {
@@ -733,14 +641,11 @@
 
         /* Content Sections */
         .content-section {
-            margin: 30px auto;
+            margin: 30px 0;
             padding: 25px;
             background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 100%);
             border-radius: 20px;
             border: 2px solid rgba(233, 30, 99, 0.2);
-            max-width: 700px;
-            width: 100%;
-            overflow: visible;
         }
 
         .section-title {
@@ -767,7 +672,7 @@
             background: rgba(255, 255, 255, 0.8);
             border-radius: 12px;
             border-left: 4px solid #ff6b9d;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease;
         }
 
         .reasons-list li:hover {
@@ -1058,19 +963,22 @@
             }
 
             .container {
-                padding: 20px 12px;
+                padding: 20px 10px;
                 border-radius: 16px;
-                margin: 0 2px;
+                margin: 0;
+                width: 100%;
             }
 
             h1 {
-                font-size: 1.6em;
-                line-height: 1.3;
+                font-size: 1.5em;
+                /* Slightly smaller for very small screens */
+                line-height: 1.2;
+                margin-bottom: 8px;
             }
 
             .subtitle {
                 font-size: 0.85em;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
             }
 
             .heart-icon {
@@ -1078,9 +986,10 @@
             }
 
             .swiper {
-                height: 400px;
-                max-width: 85%;
-                width: 85%;
+                height: 380px;
+                /* Adjusted height */
+                max-width: 90%;
+                width: 90%;
                 padding: 10px 0;
             }
 
@@ -1189,111 +1098,75 @@
             }
 
             .proposal-btn {
-                padding: 12px 30px;
-                font-size: 1.2em;
+                padding: 10px 24px;
+                font-size: 1.1em;
+                width: 120px;
+                /* Ensure equal width for buttons */
+                text-align: center;
+            }
+
+            .buttons-container {
+                gap: 10px;
+                flex-wrap: wrap;
+                /* Allow wrapping if buttons are too wide */
             }
 
             #noBtn {
-                /* Ensure absolute positioning context works better on small screens if moved */
                 transition: none;
-                /* Instant move on mobile to prevent accidental clicks */
             }
 
-            /* Love letter textarea: scrollable on mobile for infinite text */
-            #loveLetterText {
-                min-height: 300px !important;
-                max-height: 70vh !important;
-                font-size: 1.1em !important;
-                overflow-y: auto !important;
-                -webkit-overflow-scrolling: touch;
-                -webkit-appearance: none;
-                appearance: none;
-                resize: vertical;
+            /* Quiz Modal mobile updates */
+            .quiz-container {
+                padding: 20px 15px;
+                width: 95%;
             }
 
+            .quiz-title {
+                font-size: 1.5em;
+            }
+
+            .quiz-score {
+                font-size: 2em;
+            }
+
+            /* Responsive tweaks for fixed buttons on mobile */
+            .edit-toggle-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+
+            .save-btn {
+                bottom: 20px;
+                right: 140px;
+                /* Adjusted to stay left of edit button */
+                padding: 8px 15px;
+                font-size: 0.85em;
+            }
+
+            /* Countdown adjustments */
+            .countdown-item {
+                min-width: 60px;
+                padding: 10px;
+            }
+
+            .countdown-number {
+                font-size: 1.5em;
+            }
+
+            /* Love letter and list refinements */
             .love-letter-content {
                 padding: 15px;
             }
 
-            .letter-header {
-                font-size: 1.4em;
-            }
-
-            .letter-signature {
-                font-size: 1.2em;
-            }
-
-            .envelope-btn {
-                padding: 15px 25px;
-                font-size: 1em;
-            }
-
-            /* Bucket List & Reasons sections mobile fix */
-            .content-section {
-                margin: 15px 4px;
-                padding: 15px 12px;
-                border-radius: 16px;
-                overflow: visible;
-            }
-
-            .section-title {
-                font-size: 1.4em;
-                margin-bottom: 15px;
-            }
-
-            .bucket-list {
-                grid-template-columns: 1fr !important;
-                gap: 8px;
+            .reasons-list li {
+                padding: 10px;
+                font-size: 0.9em;
             }
 
             .bucket-item {
                 padding: 10px;
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-
-            .bucket-item .editable-input,
-            .bucket-item .bucket-textarea {
-                min-width: 0;
-                flex: 1 1 60%;
-                font-size: 0.9em;
-                word-break: break-word;
-            }
-
-            .bucket-item .editable-emoji {
-                width: 35px;
-                font-size: 1.2em;
-                flex-shrink: 0;
-            }
-
-            .reasons-list li {
-                padding: 10px;
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-
-            .reasons-list li .editable-input,
-            .reasons-list li .reason-textarea {
-                min-width: 0;
-                flex: 1 1 60%;
-                font-size: 0.9em;
-                word-break: break-word;
-            }
-
-            .reason-number {
-                width: 24px;
-                height: 24px;
-                font-size: 0.75em;
-                flex-shrink: 0;
-            }
-
-            .playlist-container {
-                gap: 8px;
-            }
-
-            .song-item {
-                padding: 10px;
-                gap: 10px;
             }
         }
 
@@ -1338,15 +1211,6 @@
 
             .footer .tagline {
                 font-size: 0.8em;
-            }
-
-            .content-section {
-                margin: 12px 3px;
-                padding: 12px 8px;
-            }
-
-            .section-title {
-                font-size: 1.2em;
             }
         }
 
@@ -1426,13 +1290,13 @@
         }
 
         /* Focus Effects */
-        .editable-input:focus {
+        body.edit-mode .editable-input:focus {
             border-bottom-color: #e91e63;
             border-bottom-width: 3px;
             background: linear-gradient(to top, rgba(233, 30, 99, 0.05), transparent);
         }
 
-        .editable-textarea:focus {
+        body.edit-mode .editable-textarea:focus {
             background: rgba(255, 255, 255, 0.8);
             border-color: #e91e63;
             box-shadow: 0 4px 12px rgba(233, 30, 99, 0.1);
@@ -1454,54 +1318,12 @@
 
         /* Layout fixes for lists */
         .reasons-list li .editable-input,
-        .reasons-list li .reason-textarea,
-        .bucket-item .editable-input,
-        .bucket-item .bucket-textarea {
+        .bucket-item .editable-input {
             flex: 1;
             width: auto;
             margin-bottom: 0;
-            margin-top: 0;
-        }
-
-        /* Textarea styles for reasons and bucket list */
-        .reason-textarea,
-        .bucket-textarea {
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid rgba(233, 30, 99, 0.3);
-            font-family: inherit;
-            font-size: 1em;
-            color: #5a3d3d;
-            padding: 5px 0;
-            outline: none;
-            resize: none;
-            overflow: hidden;
-            min-height: 28px;
-            line-height: 1.5;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 0;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-        }
-
-        .reason-textarea:focus,
-        .bucket-textarea:focus {
-            border-bottom-color: #e91e63;
-            border-bottom-width: 3px;
-            background: linear-gradient(to top, rgba(233, 30, 99, 0.05), transparent);
-        }
-
-        .reason-textarea::placeholder,
-        .bucket-textarea::placeholder {
-            color: rgba(184, 90, 113, 0.5);
-            font-style: italic;
-        }
-
-        body:not(.edit-mode) .reason-textarea,
-        body:not(.edit-mode) .bucket-textarea {
-            border-bottom-color: transparent;
-            pointer-events: none;
-            cursor: default;
+            margin-top: -5px;
+            /* Slight alignment tweak */
         }
 
         .reasons-list li,
@@ -1546,21 +1368,10 @@
             display: none !important;
         }
 
-        body:not(.edit-mode) .editable-input {
+        body:not(.edit-mode) .editable-input,
+        body:not(.edit-mode) .editable-textarea {
             border-bottom-color: transparent;
             /* Hide underline in view mode */
-            pointer-events: none;
-            /* Read-only */
-        }
-
-        body:not(.edit-mode) .editable-textarea {
-            border-color: transparent;
-            /* Hide border in view mode */
-            pointer-events: auto;
-            /* Allow scrolling on mobile */
-            cursor: default;
-            background: rgba(255, 255, 255, 0.2);
-            /* Subtle background in view mode */
         }
 
         body:not(.edit-mode) .editable-emoji {
@@ -1568,6 +1379,12 @@
         }
 
         .edit-toggle-btn {
+            position: fixed;
+            bottom: 30px;
+            /* Move to bottom */
+            right: 30px;
+            /* Move to right */
+            z-index: 1000;
             background: rgba(255, 255, 255, 0.6);
             /* More transparent initially */
             border: 2px solid #e91e63;
@@ -1594,6 +1411,39 @@
             color: white;
             opacity: 1;
             box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+        }
+
+        .save-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 180px;
+            /* Positioned to the left of edit button */
+            z-index: 1000;
+            background: #4CAF50;
+            border: 2px solid #45a049;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: none;
+            /* Hidden by default */
+        }
+
+        body.edit-mode .save-btn {
+            display: block;
+        }
+
+        .save-btn:hover {
+            transform: scale(1.05);
+            background: #45a049;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .save-btn:active {
+            transform: scale(0.95);
         }
 
         .delete-btn {
@@ -1701,7 +1551,7 @@
 
     <!-- Page 2: Proposal -->
     <div id="proposal-screen" class="page-section">
-        <h1 class="proposal-title">Will you be my Valentine? 🌹</h1>
+        <h1 class="proposal-title">Will you be my Forever? 🌹</h1>
         <div class="buttons-container">
             <button class="proposal-btn btn-yes" onclick="acceptProposal()">Yes! 💖</button>
             <button class="proposal-btn btn-no" id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">No
@@ -1710,13 +1560,14 @@
     </div>
 
     <div id="main-content">
-        <div class="fixed-actions">
-            <button id="syncBtn" class="sync-btn" onclick="syncToCloud()" title="Sync data to cloud">
-                ☁️
-                <span class="sync-tooltip">Sync to Cloud</span>
+        <div class="cloud-controls" style="text-align: center; margin: 10px 0;">
+            <button id="saveToCloudBtn" onclick="syncToCloud()" class="save-btn"
+                style="background-color: #4a90e2; display: inline-block;">
+                ☁️ Sync to Cloud
             </button>
-            <button class="edit-toggle-btn" onclick="toggleEditMode()">✏️ Edit Page</button>
         </div>
+        <button class="save-btn" onclick="manualSave()">💾 Save Changes</button>
+        <button class="edit-toggle-btn" onclick="toggleEditMode()">✏️ Edit Page</button>
         <div class="container">
             <h1>Happy Valentine's Day <span class="heart-icon">💖</span></h1>
             <p class="subtitle">To the love of my life</p>
@@ -1769,24 +1620,24 @@
             </div>
         </div>
 
-        <!-- Countdown Timer Section -->
+        <!-- Engagement Timer Section -->
         <div class="countdown-section">
-            <p class="countdown-title">💝 Countdown to Valentine's Day 💝</p>
-            <div class="countdown-timer" id="countdown">
+            <p class="countdown-title">💍 Countdown to Engagement Anniversary (Jan 31) 💍</p>
+            <div class="countdown-timer" id="engagement">
                 <div class="countdown-item">
-                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-number" id="engDays">00</span>
                     <span class="countdown-label">Days</span>
                 </div>
                 <div class="countdown-item">
-                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-number" id="engHours">00</span>
                     <span class="countdown-label">Hours</span>
                 </div>
                 <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-number" id="engMinutes">00</span>
                     <span class="countdown-label">Minutes</span>
                 </div>
                 <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-number" id="engSeconds">00</span>
                     <span class="countdown-label">Seconds</span>
                 </div>
             </div>
@@ -1794,7 +1645,7 @@
 
         <!-- Anniversary Countdown Section -->
         <div class="countdown-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            <p class="countdown-title">💍 Countdown to Our Anniversary (September 3) 💍</p>
+            <p class="countdown-title">🌹 Countdown to Our Anniversary (June 22) 🌹</p>
             <div class="countdown-timer" id="anniversaryCountdown">
                 <div class="countdown-item">
                     <span class="countdown-number" id="annDays">00</span>
@@ -1817,7 +1668,7 @@
 
         <!-- Relationship Duration Counter -->
         <div class="countdown-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-            <p class="countdown-title">❤️ Together Since September 3, 2025 ❤️</p>
+            <p class="countdown-title">❤️ Together Since June 22, 2025 ❤️</p>
             <div class="countdown-timer" id="relationshipDuration">
                 <div class="countdown-item">
                     <span class="countdown-number" id="relYears">0</span>
@@ -1845,9 +1696,9 @@
                 <span>Open My Love Letter</span>
             </button>
             <div class="love-letter-content" id="loveLetter">
-                <h3 class="letter-header">My Dearest Shahd</h3>
+                <h3 class="letter-header">My Dearest Omar</h3>
                 <textarea id="loveLetterText" class="editable-textarea"
-                    style="min-height: 400px; max-height: 80vh; font-family: 'Dancing Script', cursive; font-size: 1.5em; line-height: 1.8; background: rgba(255,255,255,0.4); overflow-y: auto; -webkit-overflow-scrolling: touch;"
+                    style="min-height: 400px; font-family: 'Dancing Script', cursive; font-size: 1.5em; line-height: 1.5; background: rgba(255,255,255,0.4);"
                     placeholder="Write your love letter here..." oninput="saveContent()"></textarea>
                 <p class="letter-signature">Forever yours, <input type="text" class="editable-input"
                         style="width: 200px; display: inline-block; text-align: left;" placeholder="Your Name"
@@ -1859,9 +1710,9 @@
         <div class="content-section">
             <h2 class="section-title">💕 Reasons I Love You 💕</h2>
             <ul class="reasons-list">
-                <li><span class="reason-number">1</span><textarea class="reason-textarea reason-input" rows="1"
-                        placeholder="Reason #1" oninput="saveContent(); autoResizeTextarea(this)"></textarea> <button
-                        class="delete-btn" onclick="removeSelf(this)" title="Delete item">🗑️</button></li>
+                <li><span class="reason-number">1</span><input type="text" class="editable-input reason-input"
+                        placeholder="Reason #1" oninput="saveContent()"> <button class="delete-btn"
+                        onclick="removeSelf(this)" title="Delete item">🗑️</button></li>
             </ul>
             <div style="text-align: center; margin-top: 15px;" class="add-btn-container">
                 <button class="unlock-btn" style="font-size: 0.9em; padding: 8px 20px;" onclick="addReasonItem()">➕ Add
@@ -1874,10 +1725,9 @@
             <h2 class="section-title">✨ Our Bucket List ✨</h2>
             <div class="bucket-list">
                 <div class="bucket-item"><input type="text" class="editable-emoji bucket-icon" value="🌊"
-                        oninput="saveContent()"><textarea class="bucket-textarea bucket-input" rows="1"
-                        placeholder="Bucket list item..." oninput="saveContent(); autoResizeTextarea(this)"></textarea>
-                    <button class="delete-btn" onclick="removeSelf(this)" title="Delete item">🗑️</button>
-                </div>
+                        oninput="saveContent()"><input type="text" class="editable-input bucket-input"
+                        placeholder="Bucket list item..." oninput="saveContent()"> <button class="delete-btn"
+                        onclick="removeSelf(this)" title="Delete item">�️</button></div>
             </div>
             <div style="text-align: center; margin-top: 15px;" class="add-btn-container">
                 <button class="unlock-btn" style="font-size: 0.9em; padding: 8px 20px;" onclick="addBucketItem()">➕ Add
@@ -1892,60 +1742,58 @@
                 <div class="song-item">
                     <span class="song-number">🎶</span>
                     <div class="song-info">
-                        <a href="https://open.anghami.com/jWflxFrME0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Makan fe albek</div>
+                        <a href="https://open.anghami.com/cf8g4ROFE0b" target="_blank" style="text-decoration: none;">
+                            <div class="song-title">Ana msh ayez gherk</div>
                         </a>
-                        <div class="song-artist">Marwan Mousa&Donia Wael</div>
+                        <div class="song-artist">Bahaa Sultan&Hassan El shafay</div>
                     </div>
                 </div>
                 <div class="song-item">
                     <span class="song-number">🎶</span>
                     <div class="song-info">
-                        <a href="https://open.anghami.com/5aP06hpME0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Lma tgheby</div>
+                        <a href="https://open.anghami.com/FtjcLhQFE0b" target="_blank" style="text-decoration: none;">
+                            <div class="song-title">Khalena lwahdena</div>
                         </a>
-                        <div class="song-artist">Lege-cy</div>
+                        <div class="song-artist">Amr Diab</div>
                     </div>
                 </div>
                 <div class="song-item">
                     <span class="song-number">🎶</span>
                     <div class="song-info">
-                        <a href="https://open.anghami.com/Su2qk0lME0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Shedeny</div>
+                        <a href="https://youtu.be/AiIBKcd4m5Q?si=BZ4bOMRkA9nbCUTh" target="_blank"
+                            style="text-decoration: none;">
+                            <div class="song-title">I Love You Baby</div>
                         </a>
-                        <div class="song-artist">Tul8te</div>
+                        <div class="song-artist">Volodymyr Shynkar</div>
                     </div>
                 </div>
                 <div class="song-item">
                     <span class="song-number">🎶</span>
                     <div class="song-info">
-                        <a href="https://open.anghami.com/Su2qk0lME0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Shedeny</div>
+                        <a href="https://open.anghami.com/4bz6D2lGE0b" target="_blank" style="text-decoration: none;">
+                            <div class="song-title">Khabeny</div>
                         </a>
-                        <div class="song-artist">Tul8te</div>
+                        <div class="song-artist">Mohamed Fouad</div>
                     </div>
                 </div>
                 <div class="song-item">
                     <span class="song-number">🎶</span>
                     <div class="song-info">
-                        <a href="https://open.anghami.com/n1ST0dZaH0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Lama Ab2a Maak </div>
+                        <a href="https://open.anghami.com/Io2t9HSFE0b" target="_blank" style="text-decoration: none;">
+                            <div class="song-title">Habibty Malak</div>
                         </a>
-                        <div class="song-artist">ESS & Bashmohannad</div>
+                        <div class="song-artist">Amr Diab</div>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p class="signature">With all my love, Mohamed 💕</p>
-            <p class="tagline">For my dearest Shahd – our memories are just the beginning</p>
+            <p class="signature">With all my love, Rowan 💕</p>
+            <p class="tagline">For my dearest Omar – our memories are just the beginning</p>
         </div>
     </div>
-
-
 
     <!-- Quiz Modal -->
     <div class="quiz-modal" id="quizModal">
@@ -1954,51 +1802,54 @@
             <p class="quiz-subtitle">Answer these questions to unlock my love letter!</p>
 
             <div id="quizQuestions">
-                <div class="quiz-question" data-correct="1">
-                    <p>1. When is my fav moment together?</p>
+                <div class="quiz-question" data-correct="2">
+                    <p>1. When did we become friends?</p>
                     <div class="quiz-options">
-                        <div class="quiz-option" data-value="1">January 23,2025</div>
-                        <div class="quiz-option" data-value="2">January 24,2025</div>
-                        <div class="quiz-option" data-value="3">January 25,2025</div>
+                        <div class="quiz-option" data-value="1">21/12/2025</div>
+                        <div class="quiz-option" data-value="2">21/12/2024</div>
+                        <div class="quiz-option" data-value="3">12/12/2024</div>
                     </div>
                 </div>
 
-                <div class="quiz-question" data-correct="1">
+                <div class="quiz-question" data-correct="3">
                     <p>2. When is our anniversary?</p>
                     <div class="quiz-options">
-                        <div class="quiz-option" data-value="1">September 3</div>
-                        <div class="quiz-option" data-value="2">August 3</div>
-                        <div class="quiz-option" data-value="3">September 9</div>
+                        <div class="quiz-option" data-value="1">July 22</div>
+                        <div class="quiz-option" data-value="2">June 23</div>
+                        <div class="quiz-option" data-value="3">June 22</div>
                     </div>
                 </div>
 
                 <div class="quiz-question" data-correct="1">
-                    <p>3. When is my birthday? 🎂</p>
+                    <p>3. What is my favorite food?</p>
                     <div class="quiz-options">
-                        <div class="quiz-option" data-value="1">September 23</div>
-                        <div class="quiz-option" data-value="2">September 24</div>
-                        <div class="quiz-option" data-value="3">September 25</div>
+                        <div class="quiz-option" data-value="1">makrona w paneh</div>
+                        <div class="quiz-option" data-value="2">koshary</div>
+                        <div class="quiz-option" data-value="3">makrona bashamel</div>
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-correct="1">
+                    <p>4. When is my birthday? 🎂</p>
+                    <div class="quiz-options">
+                        <div class="quiz-option" data-value="1">August 14</div>
+                        <div class="quiz-option" data-value="2">August 4</div>
+                        <div class="quiz-option" data-value="3">September 14</div>
                     </div>
                 </div>
             </div>
 
             <div class="quiz-result" id="quizResult">
-                <p class="quiz-score" id="quizScore">0/3</p>
+                <p class="quiz-score" id="quizScore">0/4</p>
                 <p class="quiz-message" id="quizMessage"></p>
             </div>
 
             <button class="quiz-submit" id="quizSubmit" onclick="submitQuiz()">Check My Answers 💕</button>
         </div>
     </div>
-    </div>
-    </div>
 
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script>
         // Initialize Swiper
         const swiper = new Swiper('.swiper', {
@@ -2015,23 +1866,21 @@
             },
         });
 
-        // Countdown Timer to Valentine's Day
-        function updateCountdown() {
+        // Engagement Anniversary Countdown (Jan 31)
+        function updateEngagementTimer() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            let valentinesDay = new Date(currentYear, 1, 14); // Feb 14
+            let engagementDate = new Date(currentYear, 0, 31); // Jan 31
 
-            // If Valentine's Day has passed this year, count to next year
-            if (now > valentinesDay) {
-                valentinesDay = new Date(currentYear + 1, 1, 14);
+            // If Jan 31 has passed this year, count to next year
+            if (now > engagementDate) {
+                engagementDate = new Date(currentYear + 1, 0, 31);
             }
 
-            const diff = valentinesDay - now;
+            const diff = engagementDate - now;
 
             if (diff <= 0) {
-                // It's Valentine's Day!
-                document.getElementById('countdown').innerHTML =
-                    '<p class="countdown-passed">💕 Happy Valentine\'s Day! 💕</p>';
+                document.getElementById('engagement').innerHTML = '<p class="countdown-passed">💍 Happy Engagement Anniversary! 💍</p>';
                 return;
             }
 
@@ -2040,24 +1889,24 @@
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            document.getElementById('engDays').textContent = days.toString().padStart(2, '0');
+            document.getElementById('engHours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('engMinutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('engSeconds').textContent = seconds.toString().padStart(2, '0');
         }
 
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        updateEngagementTimer();
+        setInterval(updateEngagementTimer, 1000);
 
         // Anniversary Countdown (July 24)
         function updateAnniversaryCountdown() {
             const now = new Date();
             const currentYear = now.getFullYear();
-            let anniversary = new Date(currentYear, 8, 3); // September 3 (month is 0-indexed)
+            let anniversary = new Date(currentYear, 5, 22); // June 22 (month is 0-indexed)
 
             // If anniversary has passed this year, count to next year
             if (now > anniversary) {
-                anniversary = new Date(currentYear + 1, 8, 3);
+                anniversary = new Date(currentYear + 1, 6, 24);
             }
 
             const diff = anniversary - now;
@@ -2085,7 +1934,7 @@
 
         // Relationship Duration Counter (since July 24, 2024)
         function updateRelationshipDuration() {
-            const startDate = new Date(2025, 8, 3); // September 3, 2025
+            const startDate = new Date(2025, 5, 22); // June 22, 2025
             const now = new Date();
 
             // Calculate total days
@@ -2116,19 +1965,6 @@
 
         updateRelationshipDuration();
         setInterval(updateRelationshipDuration, 1000 * 60); // Update every minute
-
-        // iOS textarea fix: ensure textarea scrolls properly on iOS Safari
-        (function () {
-            const ta = document.getElementById('loveLetterText');
-            if (ta) {
-                ta.addEventListener('focus', function () {
-                    // Small delay to let iOS keyboard appear, then scroll into view
-                    setTimeout(() => {
-                        ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
-                });
-            }
-        })();
 
         // Love Letter Reveal
         function revealLetter() {
@@ -2267,7 +2103,7 @@
 
         function checkPassword() {
             const password = tumblers.join('');
-            if (password === '0309') {
+            if (password === '2206') {
                 document.getElementById('lock-screen').classList.remove('active');
                 document.getElementById('proposal-screen').classList.add('active');
                 createConfetti(50); // Little celebration for unlocking
@@ -2438,8 +2274,13 @@
         window.addEventListener('load', () => {
             loadSavedMemories();
             loadContent(); // Load text content
-            setTimeout(() => autoResizeAllTextareas(), 100); // Auto-resize textareas after content loads
             setTimeout(() => createConfetti(80), 500);
+
+            // Initialize inputs as readonly
+            const inputs = document.querySelectorAll('.editable-input, .editable-textarea');
+            inputs.forEach(input => {
+                input.readOnly = true;
+            });
         });
 
         // Delete Photo Function
@@ -2549,19 +2390,6 @@
             }
         }
 
-        /* Auto-resize textarea to fit content */
-        function autoResizeTextarea(el) {
-            el.style.height = 'auto';
-            el.style.height = el.scrollHeight + 'px';
-        }
-
-        // Auto-resize all reason/bucket textareas on page load
-        function autoResizeAllTextareas() {
-            document.querySelectorAll('.reason-textarea, .bucket-textarea').forEach(ta => {
-                autoResizeTextarea(ta);
-            });
-        }
-
         /* Dynamic Item Creation Functions */
         function createStoryItem(icon = '❤️', date = '', text = '') {
             const container = document.getElementById('love-story-container');
@@ -2586,10 +2414,8 @@
         function createReasonItem(number, text = '') {
             const list = document.querySelector('.reasons-list');
             const li = document.createElement('li');
-            li.innerHTML = `<span class="reason-number">${number}</span><textarea class="reason-textarea reason-input" rows="1" placeholder="Reason #${number}" oninput="saveContent(); autoResizeTextarea(this)">${text}</textarea> <button class="delete-btn" onclick="removeSelf(this)" title="Delete item">🗑️</button>`;
+            li.innerHTML = `<span class="reason-number">${number}</span><input type="text" class="editable-input reason-input" placeholder="Reason #${number}" value="${text}" oninput="saveContent()"> <button class="delete-btn" onclick="removeSelf(this)" title="Delete item">🗑️</button>`;
             list.appendChild(li);
-            const ta = li.querySelector('.reason-textarea');
-            if (ta) autoResizeTextarea(ta);
         }
 
         function addReasonItem() {
@@ -2603,10 +2429,8 @@
             const list = document.querySelector('.bucket-list');
             const div = document.createElement('div');
             div.className = 'bucket-item';
-            div.innerHTML = `<input type="text" class="editable-emoji bucket-icon" value="${icon}" oninput="saveContent()"><textarea class="bucket-textarea bucket-input" rows="1" placeholder="Bucket list item..." oninput="saveContent(); autoResizeTextarea(this)">${text}</textarea> <button class="delete-btn" onclick="removeSelf(this)" title="Delete item">🗑️</button>`;
+            div.innerHTML = `<input type="text" class="editable-emoji bucket-icon" value="${icon}" oninput="saveContent()"><input type="text" class="editable-input bucket-input" placeholder="Bucket list item..." value="${text}" oninput="saveContent()"> <button class="delete-btn" onclick="removeSelf(this)" title="Delete item">🗑️</button>`;
             list.appendChild(div);
-            const ta = div.querySelector('.bucket-textarea');
-            if (ta) autoResizeTextarea(ta);
         }
 
         function addBucketItem() {
@@ -2638,8 +2462,16 @@
 
         function toggleEditMode() {
             document.body.classList.toggle('edit-mode');
+            const isEditMode = document.body.classList.contains('edit-mode');
             const btn = document.querySelector('.edit-toggle-btn');
-            if (document.body.classList.contains('edit-mode')) {
+
+            // Toggle Readonly
+            const inputs = document.querySelectorAll('.editable-input, .editable-textarea');
+            inputs.forEach(input => {
+                input.readOnly = !isEditMode;
+            });
+
+            if (isEditMode) {
                 btn.textContent = '✅ Finish Editing';
                 btn.classList.add('active');
             } else {
@@ -2648,85 +2480,86 @@
             }
         }
 
-        /* Firebase & Cloud Sync Logic */
-        // Your web app's Firebase configuration
-        // NOTE: Replace this with your actual Firebase config from the Firebase Console
+        function manualSave() {
+            saveContent();
+
+            // Show a visual confirmation
+            // Use ID to be specific, as there are multiple .save-btn elements
+            const btn = document.querySelector('button[onclick="manualSave()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✅ Saved!';
+            btn.style.background = '#2e7d32';
+
+            // Trigger confetti for celebration
+            createConfetti(50);
+
+            // Revert button after 2 seconds
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '#4CAF50';
+            }, 2000);
+        }
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // 1. استبدل ده بالـ Config اللي نسخته من مشروع روان الجديد
         const firebaseConfig = {
-            apiKey: "AIzaSyCSb2m6QVdgK7pcabn0r5PSsHWXYQ33u1w",
-            authDomain: "mohamed-30902.firebaseapp.com",
-            projectId: "mohamed-30902",
-            storageBucket: "mohamed-30902.firebasestorage.app",
-            messagingSenderId: "99060397568",
-            appId: "1:99060397568:web:cfff7bfee8a04b8dc78ae5"
+            apiKey: "AIzaSyAae8p7rttvb1wTr0-moo4e-PdbQgJc6VA",
+            authDomain: "rowan-2ebe6.firebaseapp.com",
+            projectId: "rowan-2ebe6",
+            storageBucket: "rowan-2ebe6.firebasestorage.app",
+            messagingSenderId: "329762388278",
+            appId: "1:329762388278:web:33d087624a973a30db1b97"
         };
 
-        // Initialize Firebase
-        let db;
-        try {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-        } catch (e) {
-            console.warn("Firebase initialization skipped or failed. Please check config.");
-        }
+        // 2. تهيئة المشروع
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const docRef = doc(db, "data", "rowan_content"); // مكان تخزين البيانات
 
-        // تحديد مكان حفظ الداتا
-        const docRef = db.collection("backups").doc("main_sync");
-
-        // 4. دالة الرفع (Upload) - بدون رسايل Alert
-        window.syncToCloud = async function () {
-            const btn = document.getElementById('saveToCloudBtn') || document.getElementById('syncBtn');
-            if (!btn) return;
+        // 3. دالة الرفع (Upload)
+        window.syncToCloud = async () => {
+            const btn = document.getElementById('saveToCloudBtn');
+            if (btn) btn.innerHTML = "⏳ Sending...";
 
             try {
-                btn.classList.add('syncing');
-                btn.innerHTML = "⏳ Syncing...";
-                if (btn.id === 'saveToCloudBtn') btn.disabled = true;
-
                 const textData = localStorage.getItem('valentines_content_text') || '{}';
                 const imagesData = localStorage.getItem('valentine_memories') || '[]';
 
-                await docRef.set({
-                    textContent: JSON.parse(textData),
+                await setDoc(docRef, {
+                    text: JSON.parse(textData),
                     images: JSON.parse(imagesData),
-                    lastSynced: new Date().toISOString()
+                    lastUpdated: new Date().toISOString()
                 });
 
-                // تغيير شكل الزرار فقط كدليل على النجاح
-                btn.innerHTML = "✅ Done";
-                if (btn.id === 'saveToCloudBtn') btn.style.backgroundColor = "#28a745";
-
-                setTimeout(() => {
-                    btn.classList.remove('syncing');
-                    btn.innerHTML = btn.id === 'syncBtn' ? "☁️" : "☁️ Sync to Cloud";
-                    if (btn.id === 'saveToCloudBtn') {
-                        btn.disabled = false;
-                        btn.style.backgroundColor = "";
-                    }
-                }, 2000);
-
-
-
+                if (btn) {
+                    btn.innerHTML = "✅ Synced to Cloud";
+                    btn.style.background = "#2e7d32";
+                    setTimeout(() => {
+                        btn.innerHTML = "☁️ Sync to Cloud";
+                        btn.style.background = "";
+                    }, 2000);
+                }
             } catch (e) {
-                console.error("Sync Error:", e);
-                btn.classList.remove('syncing');
-                btn.innerHTML = "❌ Error";
-                if (btn.id === 'saveToCloudBtn') btn.disabled = false;
-                alert("Check Firestore Rules: " + e.message);
+                console.error(e);
+                alert("Error: " + e.message);
             }
         };
 
-        // 5. دالة الاستقبال اللحظي (Listener)
-        docRef.onSnapshot((doc) => {
-            if (doc.exists) {
-                const data = doc.data();
+        // 4. دالة الاستقبال التلقائي (Real-time Listener)
+        onSnapshot(docRef, (snap) => {
+            if (snap.exists()) {
+                const data = snap.data();
                 const localTime = localStorage.getItem('cloud_sync_time');
 
-                if (data.lastSynced !== localTime) {
-                    localStorage.setItem('valentines_content_text', JSON.stringify(data.textContent));
+                if (data.lastUpdated !== localTime) {
+                    localStorage.setItem('valentines_content_text', JSON.stringify(data.text));
                     localStorage.setItem('valentine_memories', JSON.stringify(data.images));
-                    localStorage.setItem('cloud_sync_time', data.lastSynced);
+                    localStorage.setItem('cloud_sync_time', data.lastUpdated);
 
-                    // تحديث الواجهة (تأكد إن الأسامي دي هي اللي عندك في ملف الـ JS)
+                    // لو عامل دوال لتحديث الصفحة عندك ناديها هنا
                     if (typeof loadContent === 'function') loadContent();
                     if (typeof loadSavedMemories === 'function') {
                         const swiperWrapper = document.querySelector('.swiper-wrapper');
