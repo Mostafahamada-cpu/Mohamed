@@ -1423,6 +1423,7 @@
             outline: none;
             transition: all 0.3s ease;
             line-height: 1.6;
+            overflow: hidden;
         }
 
         /* Focus Effects */
@@ -1456,7 +1457,8 @@
         .reasons-list li .editable-input,
         .reasons-list li .reason-textarea,
         .bucket-item .editable-input,
-        .bucket-item .bucket-textarea {
+        .bucket-item .bucket-textarea,
+        .memory-item .editable-textarea {
             flex: 1;
             width: auto;
             margin-bottom: 0;
@@ -1505,18 +1507,20 @@
         }
 
         body:not(.edit-mode) .reason-textarea,
-        body:not(.edit-mode) .bucket-textarea {
+        body:not(.edit-mode) .bucket-textarea,
+        body:not(.edit-mode) .story-text {
             border-bottom-color: transparent;
             pointer-events: none;
             /* Read-only static text */
             background: transparent;
             resize: none;
-            overflow: hidden;
+            overflow: hidden !important;
             appearance: none;
             -webkit-appearance: none;
             box-shadow: none;
             margin: 0;
             padding: 5px 0;
+            border: none;
         }
 
         body:not(.edit-mode) .delete-btn,
@@ -2595,7 +2599,7 @@
 
         // Auto-resize all reason/bucket textareas on page load
         function autoResizeAllTextareas() {
-            document.querySelectorAll('.reason-textarea, .bucket-textarea, .editable-textarea').forEach(ta => {
+            document.querySelectorAll('.reason-textarea, .bucket-textarea, .editable-textarea, .story-text').forEach(ta => {
                 autoResizeTextarea(ta);
             });
         }
