@@ -1184,6 +1184,17 @@
                 transition: none;
                 /* Instant move on mobile to prevent accidental clicks */
             }
+
+            /* Love letter textarea: auto-grow on mobile */
+            #loveLetterText {
+                min-height: 200px !important;
+                font-size: 1.2em !important;
+                overflow-y: hidden !important;
+            }
+
+            .love-letter-content {
+                padding: 15px;
+            }
         }
 
         /* Extra small phones (iPhone SE, older devices) */
@@ -1676,8 +1687,9 @@
             <div class="love-letter-content" id="loveLetter">
                 <h3 class="letter-header">My Dearest Shahd</h3>
                 <textarea id="loveLetterText" class="editable-textarea"
-                    style="min-height: 400px; font-family: 'Dancing Script', cursive; font-size: 1.5em; line-height: 1.5; background: rgba(255,255,255,0.4);"
-                    placeholder="Write your love letter here..." oninput="saveContent()"></textarea>
+                    style="min-height: 400px; font-family: 'Dancing Script', cursive; font-size: 1.5em; line-height: 1.5; background: rgba(255,255,255,0.4); overflow-y: hidden;"
+                    placeholder="Write your love letter here..."
+                    oninput="autoResizeLoveLetter(this); saveContent()"></textarea>
                 <p class="letter-signature">Forever yours, <input type="text" class="editable-input"
                         style="width: 200px; display: inline-block; text-align: left;" placeholder="Your Name"
                         id="letterSignature" oninput="saveContent()"></p>
@@ -1748,7 +1760,7 @@
                     <span class="song-number">🎶</span>
                     <div class="song-info">
                         <a href="https://open.anghami.com/f9RAp7gME0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Lma tgheby</div>
+                            <div class="song-title">Lma btganen</div>
                         </a>
                         <div class="song-artist">Tul8te</div>
                     </div>
@@ -1935,6 +1947,19 @@
 
         updateRelationshipDuration();
         setInterval(updateRelationshipDuration, 1000 * 60); // Update every minute
+
+        // Auto-resize love letter textarea
+        function autoResizeLoveLetter(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
+        }
+        // Auto-resize on load after content is restored
+        window.addEventListener('load', function () {
+            const ta = document.getElementById('loveLetterText');
+            if (ta && ta.value) {
+                autoResizeLoveLetter(ta);
+            }
+        });
 
         // Love Letter Reveal
         function revealLetter() {
