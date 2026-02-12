@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Our Valentine's Memories</title>
     <!-- Google Fonts -->
     <link
@@ -639,15 +639,26 @@
             display: none;
             margin-top: 25px;
             padding: 30px;
+            padding-bottom: 20px;
             background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 100%);
             border-radius: 20px;
             border: 2px solid #ffb6c1;
             text-align: left;
             animation: unfold 0.5s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .love-letter-content.show {
             display: block;
+        }
+
+        @media (max-width: 600px) {
+            .love-letter-content {
+                width: 90% !important;
+                font-size: 16px !important;
+                line-height: 1.5;
+            }
         }
 
         @keyframes unfold {
