@@ -1185,15 +1185,33 @@
                 /* Instant move on mobile to prevent accidental clicks */
             }
 
-            /* Love letter textarea: auto-grow on mobile */
+            /* Love letter textarea: scrollable on mobile for infinite text */
             #loveLetterText {
-                min-height: 200px !important;
-                font-size: 1.2em !important;
-                overflow-y: hidden !important;
+                min-height: 300px !important;
+                max-height: 70vh !important;
+                font-size: 1.1em !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch;
+                -webkit-appearance: none;
+                appearance: none;
+                resize: vertical;
             }
 
             .love-letter-content {
                 padding: 15px;
+            }
+
+            .letter-header {
+                font-size: 1.4em;
+            }
+
+            .letter-signature {
+                font-size: 1.2em;
+            }
+
+            .envelope-btn {
+                padding: 15px 25px;
+                font-size: 1em;
             }
         }
 
@@ -1687,9 +1705,8 @@
             <div class="love-letter-content" id="loveLetter">
                 <h3 class="letter-header">My Dearest Shahd</h3>
                 <textarea id="loveLetterText" class="editable-textarea"
-                    style="min-height: 400px; font-family: 'Dancing Script', cursive; font-size: 1.5em; line-height: 1.5; background: rgba(255,255,255,0.4); overflow-y: hidden;"
-                    placeholder="Write your love letter here..."
-                    oninput="autoResizeLoveLetter(this); saveContent()"></textarea>
+                    style="min-height: 400px; max-height: 80vh; font-family: 'Dancing Script', cursive; font-size: 1.5em; line-height: 1.8; background: rgba(255,255,255,0.4); overflow-y: auto; -webkit-overflow-scrolling: touch;"
+                    placeholder="Write your love letter here..." oninput="saveContent()"></textarea>
                 <p class="letter-signature">Forever yours, <input type="text" class="editable-input"
                         style="width: 200px; display: inline-block; text-align: left;" placeholder="Your Name"
                         id="letterSignature" oninput="saveContent()"></p>
@@ -1759,10 +1776,19 @@
                 <div class="song-item">
                     <span class="song-number">🎶</span>
                     <div class="song-info">
-                        <a href="https://open.anghami.com/f9RAp7gME0b" target="_blank" style="text-decoration: none;">
-                            <div class="song-title">Lma btganen</div>
+                        <a href="https://open.anghami.com/Su2qk0lME0b" target="_blank" style="text-decoration: none;">
+                            <div class="song-title">Shedeny</div>
                         </a>
                         <div class="song-artist">Tul8te</div>
+                    </div>
+                </div>
+                <div class="song-item">
+                    <span class="song-number">🎶</span>
+                    <div class="song-info">
+                        <a href="https://open.anghami.com/n1ST0dZaH0b" target="_blank" style="text-decoration: none;">
+                            <div class="song-title">Lama Ab2a Maak </div>
+                        </a>
+                        <div class="song-artist">ESS & Bashmohannad</div>
                     </div>
                 </div>
 
@@ -1948,18 +1974,18 @@
         updateRelationshipDuration();
         setInterval(updateRelationshipDuration, 1000 * 60); // Update every minute
 
-        // Auto-resize love letter textarea
-        function autoResizeLoveLetter(el) {
-            el.style.height = 'auto';
-            el.style.height = el.scrollHeight + 'px';
-        }
-        // Auto-resize on load after content is restored
-        window.addEventListener('load', function () {
+        // iOS textarea fix: ensure textarea scrolls properly on iOS Safari
+        (function () {
             const ta = document.getElementById('loveLetterText');
-            if (ta && ta.value) {
-                autoResizeLoveLetter(ta);
+            if (ta) {
+                ta.addEventListener('focus', function () {
+                    // Small delay to let iOS keyboard appear, then scroll into view
+                    setTimeout(() => {
+                        ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                });
             }
-        });
+        })();
 
         // Love Letter Reveal
         function revealLetter() {
