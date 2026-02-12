@@ -1424,12 +1424,21 @@
             display: none !important;
         }
 
-        body:not(.edit-mode) .editable-input,
-        body:not(.edit-mode) .editable-textarea {
+        body:not(.edit-mode) .editable-input {
             border-bottom-color: transparent;
             /* Hide underline in view mode */
             pointer-events: none;
             /* Read-only */
+        }
+
+        body:not(.edit-mode) .editable-textarea {
+            border-color: transparent;
+            /* Hide border in view mode */
+            pointer-events: auto;
+            /* Allow scrolling on mobile */
+            cursor: default;
+            background: rgba(255, 255, 255, 0.2);
+            /* Subtle background in view mode */
         }
 
         body:not(.edit-mode) .editable-emoji {
