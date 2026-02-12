@@ -1249,13 +1249,14 @@
             .bucket-item {
                 padding: 10px;
                 gap: 8px;
-                flex-wrap: nowrap;
-                overflow: hidden;
+                flex-wrap: wrap;
             }
 
             .bucket-item .editable-input {
                 min-width: 0;
+                flex: 1 1 60%;
                 font-size: 0.9em;
+                word-break: break-word;
             }
 
             .bucket-item .editable-emoji {
@@ -1267,13 +1268,14 @@
             .reasons-list li {
                 padding: 10px;
                 gap: 8px;
-                flex-wrap: nowrap;
-                overflow: hidden;
+                flex-wrap: wrap;
             }
 
             .reasons-list li .editable-input {
                 min-width: 0;
+                flex: 1 1 60%;
                 font-size: 0.9em;
+                word-break: break-word;
             }
 
             .reason-number {
