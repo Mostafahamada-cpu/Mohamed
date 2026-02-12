@@ -1497,14 +1497,40 @@
             font-style: italic;
         }
 
+        /* Ensure no buttons in view mode */
+        body:not(.edit-mode) .reasons-list li,
+        body:not(.edit-mode) .bucket-item {
+            gap: 10px;
+            /* Consistent gap */
+        }
+
         body:not(.edit-mode) .reason-textarea,
         body:not(.edit-mode) .bucket-textarea {
             border-bottom-color: transparent;
             pointer-events: none;
-            cursor: default;
+            /* Read-only static text */
+            background: transparent;
+            resize: none;
+            overflow: hidden;
+            appearance: none;
+            -webkit-appearance: none;
+            box-shadow: none;
+            margin: 0;
+            padding: 5px 0;
         }
 
-        .reasons-list li,
+        body:not(.edit-mode) .delete-btn,
+        body:not(.edit-mode) .add-btn-container {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+        }
+
         .bucket-item {
             align-items: center;
             /* Center vertically */
@@ -2438,8 +2464,20 @@
         window.addEventListener('load', () => {
             loadSavedMemories();
             loadContent(); // Load text content
-            setTimeout(() => autoResizeAllTextareas(), 100); // Auto-resize textareas after content loads
+            updateEditableState(false); // Set initial readonly state
+
+            // Handle font loading and layout shifts
+            document.fonts.ready.then(() => {
+                setTimeout(() => autoResizeAllTextareas(), 100);
+                setTimeout(() => autoResizeAllTextareas(), 500); // Fail-safe
+            });
+
             setTimeout(() => createConfetti(80), 500);
+        });
+
+        // Add Resize Listener for Mobile Responsiveness
+        window.addEventListener('resize', () => {
+            autoResizeAllTextareas();
         });
 
         // Delete Photo Function
@@ -2551,13 +2589,13 @@
 
         /* Auto-resize textarea to fit content */
         function autoResizeTextarea(el) {
-            el.style.height = 'auto';
-            el.style.height = el.scrollHeight + 'px';
+            el.style.height = '1px'; // Reset height to minimal to get correct scrollHeight
+            el.style.height = (el.scrollHeight + 2) + 'px'; // Expand to full content height
         }
 
         // Auto-resize all reason/bucket textareas on page load
         function autoResizeAllTextareas() {
-            document.querySelectorAll('.reason-textarea, .bucket-textarea').forEach(ta => {
+            document.querySelectorAll('.reason-textarea, .bucket-textarea, .editable-textarea').forEach(ta => {
                 autoResizeTextarea(ta);
             });
         }
@@ -2638,14 +2676,25 @@
 
         function toggleEditMode() {
             document.body.classList.toggle('edit-mode');
+            const isEditMode = document.body.classList.contains('edit-mode');
             const btn = document.querySelector('.edit-toggle-btn');
-            if (document.body.classList.contains('edit-mode')) {
+
+            updateEditableState(isEditMode);
+
+            if (isEditMode) {
                 btn.textContent = '✅ Finish Editing';
                 btn.classList.add('active');
             } else {
                 btn.textContent = '✏️ Edit Page';
                 btn.classList.remove('active');
             }
+        }
+
+        function updateEditableState(isEditable) {
+            const elements = document.querySelectorAll('.editable-input, .editable-textarea, .reason-textarea, .bucket-textarea, .editable-emoji');
+            elements.forEach(el => {
+                el.readOnly = !isEditable;
+            });
         }
 
         /* Firebase & Cloud Sync Logic */
